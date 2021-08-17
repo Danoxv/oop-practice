@@ -2,33 +2,26 @@
 
 class Date
 {
+
     private $date;
 
-    public function __construct($date)
+    public function __construct(string $date)
     {
-        // если дата не передана - пусть берется текущая
         if ($date == null) {
-            $this->date = date("Ymd");
+            $this->date = new DateTime();
+        } else {
+            $this->date = DateTime::createFromFormat('Y-m-d', $date);
         }
-        $this->date = $date;
-
     }
 
     public function getDay()
     {
-        // возвращает день
-        $date = DateTime::createFromFormat('Y-m-d', $this->date);
-        $date->format('d');//string
+        return $this->date->format('d');//string
     }
 
     public function getMonth(/*string $lang*/)
     {
-        // возвращает месяц
-        $date = DateTime::createFromFormat('Y-m-d', $this->date);
-        return $date->format(' m ');
-        // переменная $lang может принимать значение ru или en
-        // если эта не пуста - пусть месяц будет словом на заданном языке
-
+        return $this->date->format(' m ');
 //       if (!empty($lang === 'ru')) {
 //            //TODO make mode rus layout
 //           $date = DateTime::createFromFormat('Y-m-d', $this->date);
@@ -43,80 +36,101 @@ class Date
 
     public function getYear()
     {
-        $date = DateTime::createFromFormat('Y-m-d', $this->date);
-        return $date->format('Y');
+        return $this->date->format('Y');
     }
 
-    public function getWeekDay(/*$lang = null*/)
+    /**
+     * @param null $lang To be implemented
+     * @return string
+     */
+    public function getWeekDay($lang = null)
     {
         // возвращает день недели
-        $date = DateTime::createFromFormat('Y-m-d', $this->date);
-        return $date->format(' W ');
-        // переменная $lang может принимать значение ru или en
-        // если эта не пуста - пусть месяц будет словом на заданном языке
+ //       setlocale(LC_ALL, 'ru_RU', 'ru_RU.UTF-8', 'ru', 'russian');
+//        if ($lang == 'ru') {
+//            return strftime("%A", $this->date->getTimestamp());
+//        } elseif ($lang == 'en') {
+//            return $this->date->format('N');
+//        } elseif (empty($lang)) {
+            return $this->date->format('N');
+
+        //}
     }
 
     function addDay(int $value)
     {
-        // $interval = new DateInterval("P$valueD");
-        $date = DateTime::createFromFormat('Y-m-d', $this->date);
-        $date->add(new DateInterval("P{$value}D"));
-         $this->date = $date->format('Y-m-d');
+        $this->date->add(new DateInterval("P{$value}D"));
         return $this;
-    } 
-
-    public function subDay($value)
-    {
-        // отнимает значение $value от дня
     }
 
-    public function addMonth($value)
+    public
+    function subDay($value)
     {
-        // добавляет значение $value к месяцу
+        $this->date->sub(new DateInterval("P{$value}D"));
+        return $this;
     }
 
-    public function subMonth($value)
+    public
+    function addMonth($value)
     {
-        // отнимает значение $value от месяца
+        $this->date->add(new DateInterval("P{$value}M"));
+        return $this;
     }
 
-    public function addYear($value)
+    public
+    function subMonth($value)
     {
-        // добавляет значение $value к году
+        $this->date->sub(new DateInterval("P{$value}M"));
+        return $this;
     }
 
-    public function subYear($value)
+    public
+    function addYear($value)
     {
-        // отнимает значение $value от года
+
+        $this->date->add(new DateInterval("P{$value}Y"));
+        return $this;
     }
 
-    public function format($format)
+    public
+    function subYear($value)
+    {
+        $this->date->sub(new DateInterval("P{$value}Y"));
+        return $this;
+    }
+
+    public
+    function format(string $format)
     {
         // выведет дату в указанном формате
         // формат пусть будет такой же, как в функции date
+        return $this->date->format($format);
+
     }
 
-//    public function __toString()
-//    {
-//        // выведет дату в формате 'год-месяц-день'
-//    }
+    public
+    function __toString()
+    {
+        return $this->format('Y-m-d');
+    }
 }
 
 //2025-12-31
 // проверенно на нынешней дате
-$date = new Date('2025-12-21');
+$date = new Date('2025-10-11');
 
+// готовый блок
 //echo $date->getYear();  // выведет '2025'
 //echo $date->getMonth('ru'); // выведет '12'
 //echo $date->getDay();   // выведет '31'
-////
 //echo $date->getWeekDay();     // выведет '3'
 
-echo $date->addDay(5);
+//echo $date->format('Y-m-d');
+//echo $date->addDay(5);
 //echo $date->getWeekDay('ru'); // выведет 'среда'
 //echo $date->getWeekDay('en'); // выведет 'wednesday'
 //
 //echo (new Date('2025-12-31'))->addYear(1); // '2026-12-31'
 //echo (new Date('2025-12-31'))->addDay(1);  // '2026-01-01'
 //
-//echo (new Date('2025-12-31'))->subDay(3)->addYear(1); // '2026-12-28'
+echo (new Date('2025-12-31'))->subDay(3)->addYear(1); // '2026-12-28'
