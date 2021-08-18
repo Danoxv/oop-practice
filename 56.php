@@ -46,13 +46,13 @@ class Date
     public function getWeekDay($lang = null): string
     {
         // возвращает день недели
- //       setlocale(LC_ALL, 'ru_RU', 'ru_RU.UTF-8', 'ru', 'russian');
+        //       setlocale(LC_ALL, 'ru_RU', 'ru_RU.UTF-8', 'ru', 'russian');
 //        if ($lang == 'ru') {
 //            return strftime("%A", $this->date->getTimestamp());
 //        } elseif ($lang == 'en') {
 //            return $this->date->format('N');
 //        } elseif (empty($lang)) {
-            return $this->date->format('N');
+        return $this->date->format('N');
 
         //}
     }
@@ -112,6 +112,11 @@ class Date
     {
         return $this->format('Y-m-d');
     }
+
+    public function getDateTime()
+    {
+        return $this->date;
+    }
 }
 
 //2025-12-31
@@ -132,4 +137,4 @@ $date = new Date('2025-10-11');
 //echo (new Date('2025-12-31'))->addYear(1); // '2026-12-31'
 //echo (new Date('2025-12-31'))->addDay(1);  // '2026-01-01'
 //
-echo (new Date('2025-12-31'))->subDay(3)->addYear(1); // '2026-12-28'
+//echo (new Date('2025-12-31'))->subDay(3)->addYear(1); // '2026-12-28'
