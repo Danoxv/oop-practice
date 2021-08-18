@@ -3,7 +3,7 @@
 class Date
 {
 
-    private $date;
+    private DateTime $date;
 
     public function __construct(string $date)
     {
@@ -14,7 +14,7 @@ class Date
         }
     }
 
-    public function getDay()
+    public function getDay(): string
     {
         return $this->date->format('d');//string
     }
@@ -34,7 +34,7 @@ class Date
 
     }
 
-    public function getYear()
+    public function getYear(): string
     {
         return $this->date->format('Y');
     }
@@ -43,7 +43,7 @@ class Date
      * @param null $lang To be implemented
      * @return string
      */
-    public function getWeekDay($lang = null)
+    public function getWeekDay($lang = null): string
     {
         // возвращает день недели
  //       setlocale(LC_ALL, 'ru_RU', 'ru_RU.UTF-8', 'ru', 'russian');
@@ -57,50 +57,49 @@ class Date
         //}
     }
 
-    function addDay(int $value)
+    function addDay(int $value): static
     {
         $this->date->add(new DateInterval("P{$value}D"));
         return $this;
     }
 
     public
-    function subDay($value)
+    function subDay($value): static
     {
         $this->date->sub(new DateInterval("P{$value}D"));
         return $this;
     }
 
     public
-    function addMonth($value)
+    function addMonth($value): static
     {
         $this->date->add(new DateInterval("P{$value}M"));
         return $this;
     }
 
     public
-    function subMonth($value)
+    function subMonth($value): static
     {
         $this->date->sub(new DateInterval("P{$value}M"));
         return $this;
     }
 
     public
-    function addYear($value)
+    function addYear($value): static
     {
-
         $this->date->add(new DateInterval("P{$value}Y"));
         return $this;
     }
 
     public
-    function subYear($value)
+    function subYear($value): static
     {
         $this->date->sub(new DateInterval("P{$value}Y"));
         return $this;
     }
 
     public
-    function format(string $format)
+    function format(string $format): string
     {
         // выведет дату в указанном формате
         // формат пусть будет такой же, как в функции date
