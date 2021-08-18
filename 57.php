@@ -29,7 +29,9 @@ class Interval
 
     public function __toString()
     {
-        return serialize(['years' => $this->toYears(), 'months' => $this->toMonths(), 'days' => $this->toDays()]);
+        // return var_export(['years' => $this->toYears(), 'months' => $this->toMonths(), 'days' => $this->toDays()] ,true);
+        // return serialize(['years' => $this->toYears(), 'months' => $this->toMonths(), 'days' => $this->toDays()]);
+        return json_encode(['years' => $this->toYears(), 'months' => $this->toMonths(), 'days' => $this->toDays()]);
     }
 
 }
