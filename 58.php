@@ -70,7 +70,7 @@ class File
      */
     public function getDir(): string
     {
-        return dirname($this->filePath);
+        return $this->getPath();
     }
 
     /**
