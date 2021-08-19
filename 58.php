@@ -32,13 +32,34 @@ interface iFile
 class File
 {
 
+    /**
+     * @var
+     */
     private $filePath;
+    /**
+     * @var array {
+     * @see pathinfo()
+     *
+     * @type string[] {
+     * @type string $dirname
+     * @type string $basename
+     * @type string $extension
+     * @type string $filename
+     *     }
+     *     }
+     */
+    private array $pathParts;
 
     public function __construct($filePath)
     {
-        $this->filePath = $filePath;
+        $this->setFilePath($filePath);
+        $this->resolvePathParts();
+
     }
 
+    /**
+     * @return mixed
+     */
     public function getPath()
     {
         return $this->filePath;
@@ -47,58 +68,114 @@ class File
     /**
      * @return mixed
      */
-    public function getDir()
+    public function getDir(): string
     {
         return dirname($this->filePath);
     }
 
-
-
-    public function getExt()
+    /**
+     * @return string
+     */
+    public function getName(): string
     {
-        $path_parts = pathinfo($this->filePath);
-        return $path_parts['extension'];
+
+        return $this->pathParts['basename'];
     }
 
-    public function getSize()
+    /**
+     * @return string
+     */
+    public function getExt(): string
+    {
+
+        return $this->pathParts['extension'];
+    }
+
+    /**
+     * @return int|float
+     */
+    public function getSize(): int|float
     {
         echo filesize($this->filePath);
     }
 
-    public function getText()
+    /**
+     * @return bool|string
+     */
+    public function getText(): bool|string
     {
         return file_get_contents($this->filePath);
     }
 
-    public function setText(string $text)
+    /**
+     * @param string $text
+     * @return bool|int
+     */
+    public function setText(string $text): bool|int
     {
         return file_put_contents($this->filePath, $text);
     }
 
-    public function appendText(string $text)
+    /**
+     * @param string $text
+     * @return bool|int
+     */
+    public function appendText(string $text): bool|int
     {
         return file_put_contents($this->filePath, $text, FILE_APPEND);
     }
 
-    public function copy($copyPath)
+    /**
+     * @param $copyPath
+     * @return bool
+     */
+    public function copy($copyPath): bool
     {
         return copy($this->filePath, $copyPath);
     }
 
-    public function rename($newName)
+    /**
+     * @param $newName
+     * @return bool
+     */
+    public function rename($newName): bool
     {
-        return rename('C:\OpenServer\domains\oop-practice\test1.txt', "C:\OpenServer\domains\oop-practice\\$newName.txt");
+        return rename($this->filePath, $this->getDir() . DIRECTORY_SEPARATOR . $newName);
     }
 
-    public function getName()
+    /**
+     * @param string $filePath
+     * @return bool
+     */
+    private function isFilePathValid(string $filePath): bool
     {
-        $path_parts = pathinfo($this->filePath);
-        return $path_parts['basename'];
+        return file_exists($filePath);
     }
+
+    /**
+     * @param $filePath
+     */
+    public function setFilePath($filePath)
+    {
+        if (!$this->isFilePathValid($filePath)) {
+            die('Invalid file path');
+        }
+        $this->filePath = realpath($filePath);
+    }
+
+    private function resolvePathParts()
+    {
+        $this->pathParts = pathinfo($this->filePath);
+
+        if (!isset($this->pathParts['extension'])) {
+            $this->pathParts['extension'] = '';
+        }
+    }
+
 }
 
-$file = new File($_SERVER['DOCUMENT_ROOT'] . '\test.txt');
- echo $file->getName();
+$file = new File('test.txt');
+
+//echo $file->getName();
 //$file->setText('fg');
 //$file->copy($_SERVER['DOCUMENT_ROOT'] . '\test1.txt');
-var_dump( $file->rename('dsjfndsjfndj') );
