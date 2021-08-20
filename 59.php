@@ -2,31 +2,50 @@
 
 class Tag
 {
-    private $name;
+    /**
+     * @var string
+     */
+    private string $name;
+    /**
+     * @var array
+     */
+    private array $attrs;
 
-    private $attrs;
-
-    public function __construct($name,$attrs)
+    /**
+     * Tag constructor.
+     * @param $name
+     * @param $attrs
+     */
+    public function __construct($name, $attrs)
     {
         $this->name = $name;
         $this->attrs = $attrs;
     }
 
-    public function open()
+    /**
+     * @return string
+     */
+    public function open(): string
     {
-
         $name = $this->name;
         $attrsStr = $this->getAttrsStr($this->attrs);
         return "<$name$attrsStr>";
     }
 
-    // Выводим закрывающую часть тега:
-    public function close()
+    /**
+     * @return string
+     */
+    public function close(): string
     {
         $name = $this->name;
         return "</$name>";
     }
-    private function getAttrsStr(array $attrs)
+
+    /**
+     * @param array $attrs
+     * @return string
+     */
+    private function getAttrsStr(array $attrs): string
     {
         if (!empty($attrs)) {
             $result = '';
@@ -46,7 +65,7 @@ class Tag
 //$tag = new Tag('div');
 //echo $tag->open() . 'text' . $tag->close(); // выведет <div>text</div>
 
-$img = new Tag('img',['src'=>'/kdmfkmfdks']);
+$img = new Tag('img', ['src' => '/kdmfkmfdks']);
 echo $img->open(); // выведет <img src = "/path">
 
 //$head = new Tag('header');
