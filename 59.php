@@ -46,7 +46,7 @@ class Tag
      * @param $value
      * @return $this
      */
-    public function setAttr(string $atr, string $value): static
+    public function setAttr(string $atr,string|bool $value = true): static
     {
         $this->attrs[$atr] = $value;
         return $this;
@@ -74,7 +74,11 @@ class Tag
             $result = '';
 
             foreach ($attrs as $atr => $value) {
-                $result .= " $atr= \"$value\"";
+                if ($value === true) {
+                    $result .= " $atr"; // это атрибут без значения
+                } else {
+                    $result .= " $atr=\"$value\""; // это атрибут со значением
+                }
             }
 
             return $result;
@@ -108,6 +112,5 @@ class Tag
 //$head = new Tag('header');
 //echo $head->open() . 'header сайта' . $head->close();
 
-$tag = new Tag('img');
-echo $tag->setAttrs(['src ' => '/path', 'alt ' => 'альтернативный текст'])->open(); // откроем тег
-
+//$tag = new Tag('img');
+//echo $tag->setAttrs(['src ' => '/path', 'alt ' => 'альтернативный текст'])->open(); // откроем тег
