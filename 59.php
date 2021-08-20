@@ -16,10 +16,10 @@ class Tag
      * @param $name
      * @param $attrs
      */
-    public function __construct($name, $attrs)
+    public function __construct($name)
     {
         $this->name = $name;
-        $this->attrs = $attrs;
+        //$this->attrs = $attrs;
     }
 
     /**
@@ -42,6 +42,18 @@ class Tag
     }
 
     /**
+     * @param $atr
+     * @param $value
+     * @return $this
+     */
+    public function setAttrs($atr, $value): static
+    {
+
+        $this->attrs[$atr] = $value;
+        return $this;
+    }
+
+    /**
      * @param array $attrs
      * @return string
      */
@@ -51,7 +63,7 @@ class Tag
             $result = '';
 
             foreach ($attrs as $atr => $value) {
-                $result .= " $atr=\"$value\"";
+                $result .= " $atr= \"$value\"";
             }
 
             return $result;
@@ -60,14 +72,31 @@ class Tag
         }
     }
 
+    /**
+     * @return Tag
+     * task 61
+     * Реализуйте метод removeAttr, который будет удалять переданный параметром атрибут.
+     * Сделайте так, чтобы этот метод также мог принимать участие в цепочке.
+     *
+     */
+    public function removeAttr($val): static
+    {
+        foreach ($val as $key => $item) {
+            unset($this->attrs[$key]);
+        }
+        return $this;
+    }
 }
 
 //$tag = new Tag('div');
 //echo $tag->open() . 'text' . $tag->close(); // выведет <div>text</div>
 
-$img = new Tag('img', ['src' => '/kdmfkmfdks']);
-echo $img->open(); // выведет <img src = "/path">
+//$img = new Tag('img', ['src' => '/kdmfkmfdks']);
+//echo $img->open(); // выведет <img src = "/path">
 
 //$head = new Tag('header');
 //echo $head->open() . 'header сайта' . $head->close();
+
+$tag = new Tag('img');
+echo $tag->setAttrs('src', '/path')->setAttrs('alt ', 'альтернативный текст')->removeAttr(['src' => '/path'])->open(); // откроем тег
 
