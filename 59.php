@@ -11,7 +11,11 @@ class Tag
 
     public function open()
     {
+
         $name = $this->name;
+        if ($name == 'img'){
+            return "<$name src = \"path\">";
+        }
         return "<$name>";
     }
 
@@ -23,51 +27,12 @@ class Tag
     }
 }
 
-class Img
-{
-    private $name;
-
-    public function __construct($name)
-    {
-        $this->name = $name;
-    }
-
-    public function open($path)
-    {
-        $name = $this->name;
-        return "<$name src = \"$path\">";
-    }
-
-}
-
-class Header
-{
-    private $name;
-
-    public function __construct($name)
-    {
-        $this->name = $name;
-    }
-
-    public function open()
-    {
-        $name = $this->name;
-        return "<$name>";
-    }
-
-    // Выводим закрывающую часть тега:
-    public function close()
-    {
-        $name = $this->name;
-        return "</$name>";
-    }
-}
 $tag = new Tag('div');
 echo $tag->open() . 'text' . $tag->close(); // выведет <div>text</div>
 
-$img = new Img('img');
-echo $img->open('ghdfd'); // выведет <div>text</div>
+$img = new Tag('img');
+echo $img->open('img'); // выведет <img src = "path">
 
-$head = new Header('header');
-echo $head->open().$head->close();
+$head = new Tag('header');
+echo $head->open().'header сайта'.$head->close();
 
