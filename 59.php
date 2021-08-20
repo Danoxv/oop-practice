@@ -46,7 +46,7 @@ class Tag
      * @param $value
      * @return $this
      */
-    public function setAttr(string $atr,string|bool $value = true): static
+    public function setAttr(string $atr, string|bool $value = true): static
     {
         $this->attrs[$atr] = $value;
         return $this;
@@ -114,3 +114,6 @@ class Tag
 
 //$tag = new Tag('img');
 //echo $tag->setAttrs(['src ' => '/path', 'alt ' => 'альтернативный текст'])->open(); // откроем тег
+
+echo (new Tag('input'))->setAttr('name', 'name1')->open();
+echo (new Tag('input'))->setAttr('name', 'name2')->open();
