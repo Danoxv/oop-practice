@@ -4,19 +4,20 @@ class Tag
 {
     private $name;
 
-    public function __construct($name)
+    private $attrs;
+
+    public function __construct($name,$attrs)
     {
         $this->name = $name;
+        $this->attrs = $attrs;
     }
 
     public function open()
     {
 
         $name = $this->name;
-        if ($name == 'img'){
-            return "<$name src = \"path\">";
-        }
-        return "<$name>";
+        $attrsStr = $this->getAttrsStr($this->attrs);
+        return "<$name$attrsStr>";
     }
 
     // Выводим закрывающую часть тега:
@@ -25,14 +26,29 @@ class Tag
         $name = $this->name;
         return "</$name>";
     }
+    private function getAttrsStr(array $attrs)
+    {
+        if (!empty($attrs)) {
+            $result = '';
+
+            foreach ($attrs as $atr => $value) {
+                $result .= " $atr=\"$value\"";
+            }
+
+            return $result;
+        } else {
+            return '';
+        }
+    }
+
 }
 
-$tag = new Tag('div');
-echo $tag->open() . 'text' . $tag->close(); // выведет <div>text</div>
+//$tag = new Tag('div');
+//echo $tag->open() . 'text' . $tag->close(); // выведет <div>text</div>
 
-$img = new Tag('img');
-echo $img->open('img'); // выведет <img src = "path">
+$img = new Tag('img',['src'=>'/kdmfkmfdks']);
+echo $img->open(); // выведет <img src = "/path">
 
-$head = new Tag('header');
-echo $head->open().'header сайта'.$head->close();
+//$head = new Tag('header');
+//echo $head->open() . 'header сайта' . $head->close();
 
