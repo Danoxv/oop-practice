@@ -46,10 +46,21 @@ class Tag
      * @param $value
      * @return $this
      */
-    public function setAttrs($atr, $value): static
+    public function setAttr(string $atr, string $value): static
     {
-
         $this->attrs[$atr] = $value;
+        return $this;
+    }
+
+    /**
+     * @param $attrs
+     * @return $this
+     */
+    public function setAttrs(array $attrs): static
+    {
+        foreach ($attrs as $name => $value) {
+            $this->setAttr($name, $value);
+        }
         return $this;
     }
 
@@ -98,5 +109,5 @@ class Tag
 //echo $head->open() . 'header сайта' . $head->close();
 
 $tag = new Tag('img');
-echo $tag->setAttrs('src', '/path')->setAttrs('alt ', 'альтернативный текст')->removeAttr(['src' => '/path'])->open(); // откроем тег
+echo $tag->setAttrs(['src ' => '/path', 'alt ' => 'альтернативный текст'])->open(); // откроем тег
 
