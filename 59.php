@@ -4,7 +4,50 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 
 // урок 65
-class Tag
+
+interface iTag
+{
+    // Геттер имени:
+    public function getName();
+
+    // Геттер текста:
+    public function getText();
+
+    // Геттер всех атрибутов:
+    public function getAttrs();
+
+    // Геттер одного атрибута по имени:
+    public function getAttr($name);
+
+    // Открывающий тег, текст и закрывающий тег:
+    public function show();
+
+    // Открывающий тег:
+    public function open();
+
+    // Закрывающий тег:
+    public function close();
+
+    // Установка текста:
+    public function setText($text);
+
+    // Установка атрибута:
+    public function setAttr($name, $value = true);
+
+    // Установка атрибутов:
+    public function setAttrs(array $attrs);
+
+    // Удаление атрибута:
+    public function removeAttr(string $name);
+
+    // Установка класса:
+    public function addClass($className);
+
+    // Удаление класса:
+    public function removeClass($className);
+}
+
+class Tag implements iTag
 {
     /**
      * @var string
@@ -14,7 +57,10 @@ class Tag
      * @var array
      */
     private array $attrs;
-
+    /**
+     * @var string
+     */
+    private $text = '';
 
     /**
      * Tag constructor.
@@ -48,13 +94,13 @@ class Tag
     }
 
     /**
-     * @param $atr
+     * @param $name
      * @param $value
      * @return $this
      */
-    public function setAttr(string $atr, string|bool $value = true): static
+    public function setAttr($name, $value = true): static
     {
-        $this->attrs[$atr] = $value;
+        $this->attrs[$name] = $value;
         return $this;
     }
 
@@ -151,7 +197,7 @@ class Tag
      * @param string $className
      * @return $this
      */
-    public function removeClass(string $className): static
+    public function removeClass($className): static
     {
         if (isset($this->attrs['class'])) {
             $classNames = explode(' ', $this->attrs['class']);
@@ -175,19 +221,19 @@ class Tag
     /**
      * @return mixed
      */
-    public function getText()
+    public function getText(): mixed
     {
-        return $this->attrs['text'];
+        return $this->text;
     }
 
     /**
-     * @param string|null $value
+     * @param string|null $name
      * @return mixed|string
      */
-    public function getAttr(string $value = null)
+    public function getAttr($name): mixed
     {
-        if (isset($this->attrs[$value])) {
-            return $this->attrs[$value];
+        if (isset($this->attrs[$name])) {
+            return $this->attrs[$name];
         } else {
             return 'введите корректный вариант';
         }
@@ -198,9 +244,19 @@ class Tag
      */
     public function getAttrs(): array
     {
-        return array_keys($this->attrs);
+        return $this->attrs;
     }
 
+    public function show(): string
+    {
+        return $this->open() . $this->text . $this->close();
+    }
+
+    public function setText($text): static
+    {
+        $this->text = $text;
+        return $this;
+    }
 }
 
 //$tag = new Tag('input');
@@ -233,4 +289,4 @@ class Tag
 //    ->setAttr('text', 'eee1111111') // добавим 3 класса
 //    ->removeClass('eee') // удалим класс 'zzz'
 //    ->open(); // выведет <input class="eee kkk">
-echo (new Tag('input'))->setAttr('class', 'eee zzz kkk')->setAttr('text', 'eee1111111')->getAttr('tett');
+//echo (new Tag('input'))->setAttr('class', 'eee zzz kkk')->setAttr('text', 'eee1111111')->getAttr('tett');
