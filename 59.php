@@ -77,7 +77,7 @@ class Tag implements iTag
      */
 
 
-    public function open(): string
+    public function open()
     {
         $name = $this->name;
         $attrsStr = $this->getAttrsStr($this->attrs);
