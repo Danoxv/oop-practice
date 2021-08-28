@@ -16,4 +16,4 @@ class Image extends Tag
 
 }
 
-echo (new Image())->setAttr('src', '427cc350eb2d790bc70b40422bcb3989.jpg')->setAttr('width ', '300')->setAttr('height ', '200');
+//echo (new Image())->setAttr('src', '427cc350eb2d790bc70b40422bcb3989.jpg')->setAttr('width ', '300')->setAttr('height ', '200');
