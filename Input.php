@@ -29,22 +29,4 @@ class Input extends Tag
     }
 }
 
-//$form = (new Form)->setAttrs(['action' => '', 'method' => 'GET']);
-//
-//$input = new Input();
-//echo $form->open();
-//
-//echo (new Input)->setAttr('name', 'year')->setAttr('value', date('Y'));
-//
-//echo (new Input)->setAttr('name', 'year1')->setAttr('value', date('Y'));
-//
-//echo (new Input)->setAttr('name', 'year2')->setAttr('value', date('Y'));
-//
-//echo (new Input)->setAttr('name', 'year3')->setAttr('value', date('Y'));
-//
-//echo (new Input)->setAttr('name', 'year4')->setAttr('value', date('Y'));
-//
-//echo (new Input)->setAttr('type', 'submit');
-//
-//echo $form->close();
 
