@@ -70,6 +70,6 @@ class Ol extends HtmlList
 //$list = new HtmlList('ol');
 //echo $list->addItem((new ListItem())->setText('item1'))->addItem((new ListItem())->setText('item2'))->addItem((new ListItem())->setText('item3'));$list = new HtmlList('ol');
 
-$list1 = new Ul();
-echo $list1->addItem((new ListItem())->setText('item1'))->addItem((new ListItem())->setText('item2'))->addItem((new ListItem())->setText('item3'));
-
+//$list1 = new Ul();
+//echo $list1->addItem((new ListItem())->setText('item1'))->addItem((new ListItem())->setText('item2'))->addItem((new ListItem())->setText('item3'));
+//
