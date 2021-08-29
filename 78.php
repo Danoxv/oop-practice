@@ -4,12 +4,29 @@ require_once '59.php';
 
 class Select extends Tag
 {
+    public $options = [];
+
     public function __construct()
     {
-        // $this->setAttr('name', 'list');
         parent::__construct('select');
     }
 
+    public function add($op)
+    {
+        $this->options[] = $op;
+        return $this;
+    }
+
+    public function show()
+    {
+        $result = $this->open(); // открывающий тег
+
+        foreach ($this->options as $option) {
+            $result .= $option->show();
+        }
+            $result .= $this->close(); // закрывающий тег
+            return $result;
+    }
 }
 
 class Option extends Tag
@@ -18,15 +35,10 @@ class Option extends Tag
     {
         parent::__construct('option');
     }
-
-    public function addOpt($className)
-    {
-     return  ;
-    }
 }
 
 echo (new Select)
-//    ->add( (new Option())->setText('item1') )
-//    ->add( (new Option())->setText('item2')->setSelected() )
-//    ->add( (new Option())->setText('item3') )
+    ->add((new Option())->setText('item1'))
+    ->add((new Option())->setText('item2'))
+    ->add((new Option())->setText('item3'))
     ->show();
